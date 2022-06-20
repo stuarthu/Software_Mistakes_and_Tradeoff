@@ -1,0 +1,153 @@
+%!Adobe-FontList 1.23
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:AGaramondPro-Regular
+FamilyName:Adobe Garamond Pro
+StyleName:Regular
+FullName:Adobe Garamond Pro
+MenuName:Adobe Garamond Pro
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\cicat\Desktop\My Document\Covers 2022\Raff-MPD\Box\Lelek Folder\Document fonts\AGaramondPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:126904
+FileModTime:1327590660
+WeightClass:400
+WidthClass:5
+AngleClass:0
+DesignSize:120
+NameArray:0,Mac,4,Adobe Garamond Pro
+NameArray:0,Win,1,Adobe Garamond Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BodegaSans-Black
+FamilyName:BodegaSans Black
+StyleName:Regular
+FullName:BodegaSans Black
+MenuName:BodegaSans Black
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\cicat\Desktop\My Document\Covers 2022\Raff-MPD\Box\Lelek Folder\Document fonts\BodegaSans-Black.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:23028
+FileModTime:1226493708
+WeightClass:900
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,BodegaSans Black
+NameArray:0,Win,1,BodegaSans Black
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BodegaSans-Light
+FamilyName:BodegaSans-Light
+StyleName:Regular
+FullName:BodegaSans-Light
+MenuName:BodegaSans-Light
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\cicat\Desktop\My Document\Covers 2022\Raff-MPD\Box\Lelek Folder\Document fonts\BodegaSans-Light.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:21636
+FileModTime:1226486512
+WeightClass:500
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,BodegaSans-Light
+NameArray:0,Win,1,BodegaSans-Light
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BodegaSans-Medium
+FamilyName:BodegaSans-Medium
+StyleName:Regular
+FullName:BodegaSans-Medium
+MenuName:BodegaSans-Medium
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\cicat\Desktop\My Document\Covers 2022\Raff-MPD\Box\Lelek Folder\Document fonts\BodegaSans-Medium.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:22212
+FileModTime:1226485390
+WeightClass:500
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,BodegaSans-Medium
+NameArray:0,Win,1,BodegaSans-Medium
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:FuturaBT-Light
+FamilyName:Futura Lt BT
+StyleName:Light
+FullName:Futura Light BT
+MenuName:Futura Lt BT
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\cicat\Desktop\My Document\Covers 2022\Raff-MPD\Box\Lelek Folder\Document fonts\FUTURAL.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:37432
+FileModTime:818229600
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Futura Light BT
+NameArray:0,Win,1,Futura Lt BT
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ZapfDingbatsStd
+FamilyName:ITC Zapf Dingbats Std
+StyleName:Medium
+FullName:ITC Zapf Dingbats Std Medium
+MenuName:ITC Zapf Dingbats Std
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\cicat\Desktop\My Document\Covers 2022\Raff-MPD\Box\Lelek Folder\Document fonts\ZapfDingbatsStd.otf
+DataFormat:sfntData
+UsesStandardEncoding:no
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:38132
+FileModTime:1555669943
+WeightClass:500
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,18,ITC Zapf Dingbats Std
+NameArray:0,Mac,4,ITC Zapf Dingbats Std Medium
+NameArray:0,Win,1,ITC Zapf Dingbats Std
+%EndFont
+
