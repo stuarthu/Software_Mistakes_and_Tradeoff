@@ -44,11 +44,7 @@
 
 
 
-为了帮你了解本书各章通用的内容组织形式，我们首先以两个群众基础深厚的取舍为例，分别是：集成测试和单元测试，它们可能是最立竿见影的软件质量保障实践，你的代码中很可能也已经用到了它们。
-
-
-
-最终的目标是单元测试和集成测试可以覆盖所有的代码路径。然而，这很难在实践中达成。因为项目周期是有限的，你没有那么多的时间来完成编码并进行充分的测试。因此，投资多少资源与时间到单元测试与集成测试上就变成了每个人都需要面对的问题。
+为了帮你了解本书各章通用的内容组织形式，我们首先以两个群众基础深厚的取舍为例，分别是：集成测试和单元测试，它们可能是最立竿见影的软件质量保障实践，你的代码中很可能也已经用到了它们。最终的目标是单元测试和集成测试可以覆盖所有的代码路径。然而，这很难在实践中达成。因为项目周期是有限的，你没有那么多的时间来完成编码并进行充分的测试。因此，投资多少资源与时间到单元测试与集成测试上就变成了每个人都需要面对的问题。
 
 ##### 1.1.1 单元测试
 
@@ -101,11 +97,27 @@ public int complexCalculations() {
 
 
 
-这两种测试方法都是双刃剑，各有其利也有其弊，是你编码时不得不做的利弊权衡。单元测试的优势是速度更快，反馈时间更短，因此调试流程通常也更快。
+这两种测试方法都是双刃剑，各有其利弊，是你编码时不得不做的利弊权衡。单元测试的优势是速度更快，反馈时间更短，因此调试流程通常也更快。图1.1展示了这两种测试的优缺点。
 
-**图1.2 集成测试 vs. 单元测试 vs. 端到端测试**
+![image-20221116074431148](./1-1.png)
 
-![image-20220512111738870](./Software-Mistakes-and-Tradeoffs-1.2.png)
+ **图1.1 集成测试 vs. 单元测试 以及测试执行时间的长度（速度）之间的关系**
+
+图1.1中的图表是一个金字塔，这是因为通常情况下，软件系统中的单元测试比集成测试多得多。单元测试可以为开发者提供几乎即时的反馈，从而帮助提升开发效率。单元测试的执行速度也更快，可以帮助减少代码调试的时间。如果单元测试100%覆盖了你的代码仓库，一个新的缺陷被引入时，很可能某个单元测试会发现这个问题。你可以在单元测试覆盖的方法级别精确定位该问题。
+
+
+
+另一方面，当你的系统没有集成测试时，你将无法判断组件之间的连接是否正常以及它们之间的集成是否成功。你的算法经过充分的测试，但没有对更大场景的覆盖。最终你的系统在较低的层级上可以正确完成所有的事情，但由于系统中的组件配合没有经过测试，你无法在更高的层级确保其正确性。实际项目中，你的代码应该同时包含单元测试与集成测试。
+
+
+
+需要注意的是，图1.1仅关注了测试的一个方面，即它的执行时间与反馈时间。实际生产系统中，我们还会有其它层次的测试。我们可能会做完整验证业务场景的端到端测试。更复杂的体系结构中，我们可能需要启动N个相互连接的服务以提供对应的业务功能。由于搭建测试基础架构所需的开销，这类测试的反馈时间可能比较比较长。然而，它们能从更高的层次保障系统端到端流程的正确性。如果要拿这些测试与单元测试或者集成测试做比较，我们需要从不同的维度进行分析。譬如，如图1.2所示，它们从整体角度对系统验证的效果如何？
+
+
+
+![image-20221116225601376](./1-2.png)
+
+图1.2 集成测试 vs. 单元测试 vs. 端到端测试
 
 
 
@@ -155,21 +167,23 @@ public class Singleton {
 
 ```java 
 public class SystemComponentSingletonSynchronized {
-    private static SystemComponent instance;
-    
-    private SystemComponentSingletonSynchronized() {}
-    
-    public static synchronized SystemComponent getInsntace() {
-        if (instance == null) {
-            instance = new SystemComponent();
-        }
-        
-        return instance;
+  private static SystemComponent instance;
+ 
+  private SystemComponentSingletonSynchronized() {}
+ 
+  public static synchronized SystemComponent getInstance() {    ❶
+    if (instance == null) {
+      instance = new SystemComponent();
     }
+ 
+    return instance;
+  }
 }
 ```
 
-1 同步代码块开始
+❶ 同步代码块开始
+
+
 
 同步的代码块避免了两个线程同时访问这段逻辑。初始化完成之前，仅有一个线程能进入这段逻辑，所有其他的线程都会被阻塞。咋一看，这不就是我们所期望的么。然而，如果你的代码有比较高的性能要求，采用单例模式的同时使用了多线程，程序的性能可能会有比较严重的影响。
 
@@ -197,24 +211,30 @@ public class SystemComponentSingletonSynchronized {
 
 ```java
 private volatile static SystemComponent instance;
-
+ 
 public static SystemComponent getInstance() {
-    if (instance == null) {
-        synchronized (ThreadSafeSingleton.class) {
-            if (instance == null) {
-                instance = new SystemComponent();
-            }
-        }
+  if (instance == null) {                       ❶
+    synchronized (ThreadSafeSingleton.class) {
+      if (instance == null) {
+        instance = new SystemComponent();
+      }
     }
-    return instance;
+  }
+  return instance;
 }
 ```
 
-1 如果单例对象不为空，则不需要进入临界区
+❶ 如果单例对象不为空，则不需要进入临界区
+
+
 
 采用这种模式我们可以显著降低同步以及线程竞争资源的情况。我们只会在应用启动的时候观察到发生同步，该时刻每个线程都试图初始化单例。
 
+
+
 我们可以采用的第二种模式是“线程限定（thread confinement）”。线程限定可以将状态访问限定在特定的线程内。不过，你需要注意，这种方式从应用全局的角度而言就不再是单例模式了。每个线程都会持有一个单例对象的实例。如果你有`N`个线程，就会有`N`个实例。
+
+
 
 这种模式下，每个线程独享一个对象实例，且这个对象仅对该线程可见。基于这样的设计，多线程之间就不再存在访问对象引起的竞争。每个对象由单一线程独享，而非多线程共享。Java语言提供了`ThreadLocal`类来达到这一效果。凭借`ThreadLocal`我们可以封装系统组件，并将其绑定到特定的线程。从代码实现的角度而言，对象存在于`ThreadLocal`实例之内，如下所示：
 
@@ -277,39 +297,46 @@ static ThreadLocal<SystemComponent> threadLocalValue = ThreadLocal.withInitial(S
 @Fork(1)
 @Warmup(iterations = 1)
 @Measurement(iterations = 1)
-@BenchmarkMode(Mode.AverageTime)
-@Threads(100)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-public class BenchmarkWithSingletonVsThreadLocal {
-  private static final int NUMBER_OF_ITERATIONS = 50_000;
-  
+@BenchmarkMode(Mode.AverageTime) 
+@Threads(100)                                                   ❶
+@OutputTimeUnit(TimeUnit.MILLISECONDS) 
+public class BenchmarkSingletonVsThreadLocal {
+  private static final int NUMBER_OF_ITERATIONS = 50_000; 
+ 
   @Benchmark
   public void singletonWithSynchronization(Blackhole blackhole) {
     for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-      blackhole.consume(SystemComponentSingletonSynchronized.getInstance());
+      blackhole.consume(
+➥ SystemComponentSingletonSynchronized.getInstance());           ❷
     }
   }
-  
+ 
   @Benchmark
   public void singletonWithDoubleCheckedLocking(Blackhole blackhole) {
     for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-      blackhole.consume(SystemComponentSingletonDoubleCheckedLocking.getInstance());
+      blackhole.consume(
+➥ SystemComponentSingletonDoubleCheckedLocking.getInstance());   ❸
     }
   }
   
   @Benchmark
   public void singletonWithThreadLocal(Blackhole blackhole) {
     for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
-      blackhole.consume(SystemComponentThreadLOcal.get());
+      blackhole.consume(SystemComponentThreadLocal.get());        ❹
     }
   }
-}
+} 
 ```
 
-> 1. 启动100个并发线程执行这段代码逻辑
-> 2. 第一个基准测试采用`SystemComponentSingletonSynchronized`
-> 3. 对`SystemComponentSingletonDoubleCheckedLocking`的基准测试
-> 4. 获取`SystemComponentThreadLocal`的基准测试结果
+❶ 启动100个并发线程执行这段代码逻辑
+
+❷ 第一个基准测试采用`SystemComponentSingletonSynchronized`
+
+❸ 对`SystemComponentSingletonDoubleCheckedLocking`的基准测试
+
+❹ 获取`SystemComponentThreadLocal`的基准测试结果
+
+
 
 执行这个测试，我们可以得到100个并发线程，完成50,000次调用的平均耗时。注意，你的实际耗时可能因环境不同有所差异，不过总体的趋势应该保持一致，就像下面这个列表所展示的。
 
@@ -360,7 +387,7 @@ CH01.BenchmarkSingletonVsThreadLocal.singletonWithThreadLocal           avgt    
 
 不过，整体而言，与单体架构比起来，微服务架构的扩展性要容易得多。单体架构下，一旦某些资源达到上限，几乎不可能做快速扩展。
 
-
+![image-20221116230633446](./1-3.png)
 
 > 图1.3 横向扩展意味着可以通过向资源池中添加更多的机器来满足增长的业务需求
 
@@ -394,7 +421,7 @@ CH01.BenchmarkSingletonVsThreadLocal.singletonWithThreadLocal           avgt    
 
 你已经了解微服务架构和单体架构对比的优势，同时你也需要了解它的短板。微服务架构是一种复杂的设计，它包含多个组成部分。如果你有合适的负载均衡器，可以很容易地实现可扩展性；负载均衡器维护了多个运行服务的列表，并为流量进行路由。底层服务可以纵向扩展，也可以收缩，这意味着服务可以按需创建和销毁。变化的跟踪是一个非常大的挑战。为了解决这一问题，我们引入了一个新的服务组册组件（如图1.4所示）。
 
-
+![image-20221116230758191](./1-4.png)
 
 > 图1.4 微服务架构中的服务注册
 
@@ -421,8 +448,3 @@ CH01.BenchmarkSingletonVsThreadLocal.singletonWithThreadLocal           avgt    
 - 开发周期有限时，你也需要特别留意设计选择的后果，譬如，采用单元测试还是集成测试来保障你的代码质量。
 - 久经考验的底层代码设计模式，譬如单例模式，不一定是放诸四海而皆准的“设计良药”。以单例模式为例，涉及线程安全时就会引入性能问题。所以我们做决策的时候需要结合项目的上下文，综合判断。
 - 微服务架构不一定适合解决每个问题；架构设计选型时，我们需要系统地评估优缺利弊。
-
-
-
-
-
