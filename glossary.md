@@ -6,6 +6,7 @@
 | Data Locality    | 数据本地性 |
 | Data Shuffling   | 数据洗牌   |
 | Data Skew        | 数据倾斜   |
+| Dependency Shading | 依赖遮蔽 |
 | Integration Test | 集成测试   |
 | MapReduce        | 映射缩减   |
 | Partition Scheme | 分区策略   |
